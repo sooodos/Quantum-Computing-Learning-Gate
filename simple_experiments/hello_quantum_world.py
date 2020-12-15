@@ -6,7 +6,7 @@ from qiskit import (
 
 
 class Test:
-    with open('../ibm-credentials/qiskitrc', 'r') as file:
+    with open('../credentials/token', 'r') as file:
         token = file.read()
     IBMQ.save_account(token)
     # Use Aer's qasm_simulator

@@ -13,7 +13,7 @@ from Algorithms.deutsch_josza import DeutschJosza
 from classical.classical_xor import ClassicalXor
 from classical.guess_binary import GuessBinary
 from classical.random_binary import RandomBinary
-
+import account_details
 
 class Tools:
     @classmethod
@@ -54,9 +54,25 @@ class Tools:
 
     @classmethod
     def find_least_busy_backend_from_research(cls, n):
-        provider = IBMQ.get_provider(hub='ibm-q-research', group='Demetris-Zeinali', project='main')
-        return least_busy(provider.backends(filters=lambda x: x.configuration().n_qubits >= n and
-                                                              not x.configuration().simulator and x.status().operational == True))
+        if account_details.account_token is None\
+                or account_details.hub is None\
+                or account_details.group is None\
+                or account_details.project is None:
+            account_token = input("Insert your account token: ")
+            hub = input("Insert your hub: ")
+            group = input("Insert your group: ")
+            project = input("Insert your project: ")
+        else:
+            account_token = account_details.account_token
+            hub = account_details.hub
+            group = account_details.group
+            project = account_details.project
+
+        IBMQ.enable_account(account_token)
+        provider = IBMQ.get_provider(hub=hub, group=group, project=project)
+        print(provider)
+        return least_busy(provider.backends(filters=lambda x: x.configuration().n_qubits >= (n+1) and
+                                   not x.configuration().simulator and x.status().operational==True))
 
     @classmethod
     def print_simul(cls, answer_of_simul, algorithm: str):

@@ -1,10 +1,13 @@
 
 algorithms = ["Deutsch-Josza","Bernstein-Vazirani"]
 
+experiments = ["Bell State - Hello World", "Superposition with one Qubit", "Superposition with three Qubits"]
+
 acceptable_execution_inputs = ['0', '1', '2', '3']
 
 acceptable_algorithm_inputs = ['0', '1']
 
+acceptable_experiment_inputs = ['0', '1', '2']
 
 input_message_1 = "Choose an Algorithm: " \
                   "\n0 for Deutsch-Josza." \

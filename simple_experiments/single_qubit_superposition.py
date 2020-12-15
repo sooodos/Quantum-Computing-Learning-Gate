@@ -1,33 +1,36 @@
-from qiskit import IBMQ
-from qiskit import (
-    QuantumCircuit,
-    execute,
-    Aer)
+from qiskit import execute, Aer, QuantumCircuit, IBMQ
 
 
-class HelloWorld:
+class SingleQubitSuperposition:
     @classmethod
     def run(cls):
-        with open('./credentials/token', 'r') as file:
-            token = file.read()
-        IBMQ.save_account(token)
         # Use Aer's qasm_simulator
+
         simulator = Aer.get_backend('qasm_simulator')
 
         # Create a Quantum Circuit acting on the q register
-        circuit = QuantumCircuit(2, 2)
+        circuit = QuantumCircuit(1, 1)
 
         # Add a H gate on qubit 0
         circuit.h(0)
 
-        # Add a CX (CNOT) gate on control qubit 0 and target qubit 1
-        circuit.cx(0, 1)
-
         # Map the quantum measurement to the classical bits
-        circuit.measure([0, 1], [0, 1])
+        circuit.measure(0, 0)
 
         # Execute the circuit on the qasm simulator
         job = execute(circuit, simulator, shots=1000)
+
+        # Grab results from the job
+        result = job.result()
+
+        # Returns counts
+        counts = result.get_counts(circuit)
+        print("\nTotal count for 00 and 11 are:", counts)
+
+        provider = IBMQ.load_account()
+        backend = provider.backends.ibmq_valencia
+        # Execute the circuit on a real device
+        job = execute(circuit, backend=backend, shots=1000)
 
         # Grab results from the job
         result = job.result()

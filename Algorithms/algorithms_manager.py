@@ -43,4 +43,3 @@ class AlgorithmsManager:
             classical_answer = combined[0]
             answer_of_real = combined[1]
         print_answers(answer_of_simulation, answer_of_real, least_busy_backend, classical_answer, algorithm)
-S

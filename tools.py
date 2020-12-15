@@ -14,6 +14,8 @@ from classical.classical_xor import ClassicalXor
 from classical.guess_binary import GuessBinary
 from classical.random_binary import RandomBinary
 from credentials import account_details
+
+
 class Tools:
     @classmethod
     def calculate_elapsed_time(cls, first_step: datetime, last_step: datetime):

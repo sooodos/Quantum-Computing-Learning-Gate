@@ -1,15 +1,11 @@
-from classical.random_binary import RandomBinary
-
-
-class GuessBinary:
+class BersteinVaziraniClassical:
 
     @classmethod
-    def guess_number(cls, random_binary):
-
+    def guess_number(cls, secret_binary):
         mask = 1
         guess = ""
         attempts = 0
-        for bit in random_binary:
+        for bit in secret_binary:
             hit = int(bit) & mask
             guess += str(hit)
             attempts += 1

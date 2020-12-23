@@ -18,6 +18,6 @@ class Manager:
                 AlgorithmsManager.showcase()
 
             flag = input("Would you like to keep experimenting? (Y/N)")
-            while flag is not "Y" or flag is not "N":
+            while flag is not "Y" and flag is not "N":
                 flag = input("Would you like to keep experimenting? Please give a valid response. (Y/N)")
         print("\nYour experimenting session is now concluded. \nThank you.")

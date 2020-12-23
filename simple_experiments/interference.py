@@ -1,7 +1,7 @@
-from qiskit import execute, Aer, QuantumCircuit, IBMQ
+from qiskit import execute, Aer, QuantumCircuit
 
 
-class SingleQubitSuperposition:
+class Interference:
     @classmethod
     def run(cls):
         # Use Aer's qasm_simulator
@@ -12,6 +12,8 @@ class SingleQubitSuperposition:
         circuit = QuantumCircuit(1, 1)
 
         # Add a H gate on qubit 0
+        circuit.h(0)
+        # Add another H gate to qubit 0
         circuit.h(0)
 
         # Map the quantum measurement to the classical bits
@@ -25,19 +27,6 @@ class SingleQubitSuperposition:
 
         # Returns counts
         counts = result.get_counts(circuit)
+        print("Results for the Quantum Interference experiment.")
         print("\nTotal count for 0 and 1 are:", counts)
-
-        provider = IBMQ.load_account()
-        backend = provider.backends.ibmq_valencia
-        # Execute the circuit on a real device
-        job = execute(circuit, backend=backend, shots=1000)
-
-        # Grab results from the job
-        result = job.result()
-
-        # Returns counts
-        counts = result.get_counts(circuit)
-        print("\nTotal count for 0 and 1 are:", counts)
-
-        # Draw the circuit
         print(circuit)

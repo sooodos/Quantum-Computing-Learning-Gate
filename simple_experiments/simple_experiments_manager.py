@@ -1,5 +1,6 @@
 import constants
 from simple_experiments.hello_quantum_world import HelloWorld
+from simple_experiments.interference import Interference
 from simple_experiments.single_qubit_superposition import SingleQubitSuperposition
 from simple_experiments.three_qubits_superposition import ThreeQubitSuperposition
 
@@ -22,4 +23,6 @@ class SimpleExperimentsManager:
             SingleQubitSuperposition.run()
         elif choice == "2":
             ThreeQubitSuperposition.run()
+        elif choice == "3":
+            Interference.run()
 

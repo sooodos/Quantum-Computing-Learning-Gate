@@ -5,7 +5,7 @@ from oracles.secret_number_oracle import SecretNUmberOracle
 class BernsteinVazirani:
 
     @classmethod
-    def bernstein_vazirani(cls,random_binary) -> QuantumCircuit:
+    def bernstein_vazirani(cls, random_binary, eval_mode: bool) -> QuantumCircuit:
         # Construct secret number oracle
 
         secret_number_oracle = SecretNUmberOracle.create_secret_number_oracle(random_binary=random_binary)
@@ -40,9 +40,10 @@ class BernsteinVazirani:
             dj_circuit_after_oracle.measure(i, i)
 
         dj_circuit += dj_circuit_after_oracle
-        print("Circuit before the oracle\n")
-        print(QuantumCircuit.draw(dj_circuit_before_oracle))
-        print("Circuit after the oracle\n")
-        print(QuantumCircuit.draw(dj_circuit_after_oracle))
-        print(dj_circuit)
+        if not eval_mode:
+            print("Circuit before the oracle\n")
+            print(QuantumCircuit.draw(dj_circuit_before_oracle))
+            print("Circuit after the oracle\n")
+            print(QuantumCircuit.draw(dj_circuit_after_oracle))
+            print(dj_circuit)
         return dj_circuit

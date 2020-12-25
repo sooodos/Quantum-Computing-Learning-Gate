@@ -28,17 +28,16 @@ class ClassicalXor:
         return f'After {counts} checks.'
 
     @classmethod
-    def execute_classical_xor(cls, bits) -> str:
+    def execute_classical_xor(cls, bits) -> list:
         start = datetime.now()
         inputs = BitCombinations.produce_worse_scenario(BitCombinations.combinations(bits))
         end = datetime.now()
         elapsed = end - start
-        time_to_generate_worst_input = f"Time to generate worse input for {bits} bits took {elapsed.total_seconds()} seconds."
-        # print(inputs)
+        time_to_generate_worst_input = elapsed.total_seconds()
         start = datetime.now()
         function_nature = cls._super_secret_black_box_function_f(inputs)
         end = datetime.now()
         elapsed = end - start
-        time_str = f"Determining if xor is balanced for {bits} bits took {elapsed.total_seconds()} seconds."
-        final = f"{function_nature}\n{time_str}\n{time_to_generate_worst_input}"
+        time_str = elapsed.total_seconds()
+        final = [time_to_generate_worst_input, time_str, bits, function_nature]
         return final

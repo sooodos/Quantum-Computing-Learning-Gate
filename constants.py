@@ -1,9 +1,9 @@
 
-algorithms = ["Deutsch-Josza","Bernstein-Vazirani"]
+algorithms = ["Deutsch-Josza", "Bernstein-Vazirani"]
 
 experiments = ["Bell State - Hello World", "Superposition with one Qubit", "Superposition with three Qubits", "Interference"]
 
-acceptable_execution_inputs = ['0', '1', '2', '3']
+acceptable_execution_inputs = ['0', '1', '2', '3', '4']
 
 acceptable_algorithm_inputs = ['0', '1']
 
@@ -15,11 +15,16 @@ input_message_1 = "Choose an Algorithm: " \
                   "\nYour input:"
 
 input_message_2 = "Enter:" \
-                "\n0 for execution on the Local Device Simulator." \
-                "\n1 for execution on the Qasm simulator." \
-                "\n2 for execution on a real device." \
-                "\n3 for execution on the local device and real device!" \
-                "\nYour input:"
+                "\n\n0 for execution on the Local Device Simulator." \
+                "\n\n1 for execution on the Qasm simulator." \
+                "\n\n2 for execution on a real device." \
+                "\n\n3 for execution on the local device and real device." \
+                "\n\n4 for evaluating the algorithm" \
+                "\nby running comparisons of classical and quantum inputs with different sized inputs." \
+                "\n\nYour input:"
+
+input_message_3 = "\nEnter the maximum size of input you would like to evaluate" \
+                  "\n(in number of bits). The maximum is 14."
 cards = ["H", "H", "X", "X", "CX", "SX", "SXDG"]
 
 acceptable_choice_inputs = ["E", "A"]

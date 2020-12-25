@@ -1,5 +1,6 @@
 import constants
 from tools import Tools
+from evaluation import Evaluation
 
 
 def print_answers(answer_of_simulation, answer_of_real, least_busy_backend, classical_answer, algorithm):
@@ -42,4 +43,7 @@ class AlgorithmsManager:
             combined = Tools.execute_both(algorithm)
             classical_answer = combined[0]
             answer_of_real = combined[1]
-        print_answers(answer_of_simulation, answer_of_real, least_busy_backend, classical_answer, algorithm)
+        elif execution == "4":
+            Evaluation.evaluate(algorithm)
+        if execution != "4":
+            print_answers(answer_of_simulation, answer_of_real, least_busy_backend, classical_answer, algorithm)

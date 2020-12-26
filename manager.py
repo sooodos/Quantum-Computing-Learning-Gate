@@ -1,6 +1,6 @@
 import constants
 from simple_experiments.simple_experiments_manager import SimpleExperimentsManager
-from Algorithms.algorithms_manager import AlgorithmsManager
+from quantum_algorithms.algorithms_manager import AlgorithmsManager
 
 
 class Manager:

@@ -69,9 +69,9 @@ class Evaluation:
         fig.suptitle('Execution times and Quantum accuracy')
         times.plot(n_bits, classical_execution_times, 'c')
         times.plot(n_bits, quantum_execution_times, 'r')
-        times.ylabel('Time taken in seconds')
+        times.set(xlabel="Bits/Qubits",ylabel="Execution time (in seconds)")
         accuracy.plot(n_bits, success_rates)
-        accuracy.ylabel('Percentage')
+        times.set(xlabel="Bits/Qubits",ylabel="Accuracy Percentage")
         fig.show()
 
         return

@@ -1,3 +1,5 @@
+import math
+
 from classical.random_binary import RandomBinary
 from tools import Tools
 import constants
@@ -24,6 +26,7 @@ class Evaluation:
         n_bits = []
         quantum_execution_times = []
         classical_execution_times = []
+        success_rates = []
 
         print("Evaluating Deutsch - Josza... This might take a while...")
 
@@ -49,19 +52,28 @@ class Evaluation:
                 flag = True
                 if status != JobStatus.DONE:
                     flag = False
-
         print("Quantum experiments finished.")
+
+        count_jobs = 1
         for job in quantum_results.managed_jobs():
             quantum_execution_times.append(job.result().time_taken)
             counts_dict = job.result().get_counts()
-            print(type(counts_dict))
-            # print(job.result().get_counts())
+            correct_counts = counts_dict.get('1'*count_jobs,0)
+            print(correct_counts)
+            success_percentage = (correct_counts/1024)*100
+            success_rates.append(success_percentage)
+            count_jobs = count_jobs + 1
 
         import matplotlib.pyplot as plt
-        plt.plot(n_bits, classical_execution_times, 'c')
-        plt.plot(n_bits, quantum_execution_times, 'r')
-        plt.ylabel('Time taken in seconds')
-        plt.show()
+        fig, (times, accuracy) = plt.subplots(2)
+        fig.suptitle('Execution times and Quantum accuracy')
+        times.plot(n_bits, classical_execution_times, 'c')
+        times.plot(n_bits, quantum_execution_times, 'r')
+        times.ylabel('Time taken in seconds')
+        accuracy.plot(n_bits, success_rates)
+        accuracy.ylabel('Percentage')
+        fig.show()
+
         return
 
     @classmethod

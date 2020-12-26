@@ -7,6 +7,14 @@ from qiskit.providers import JobStatus
 class Evaluation:
 
     @classmethod
+    def evaluate(cls, algorithm):
+
+        if algorithm == "0":
+            cls.evaluate_deutsch_josza()
+        elif algorithm == "1":
+            cls.evaluate_bernstein_vazirani()
+
+    @classmethod
     def plot_results(cls, inputs: list, quantum: list, classical: list, accuracy: list):
         import numpy as np
         import matplotlib.pyplot as plt
@@ -25,14 +33,6 @@ class Evaluation:
         plt.legend(labels=['Accuracy Percentage'])
         plt.show()
         return
-
-    @classmethod
-    def evaluate(cls, algorithm):
-
-        if algorithm == "0":
-            cls.evaluate_deutsch_josza()
-        elif algorithm == "1":
-            cls.evaluate_bernstein_vazirani()
 
     @classmethod
     def evaluate_deutsch_josza(cls):

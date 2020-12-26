@@ -1,5 +1,3 @@
-import math
-
 from classical.random_binary import RandomBinary
 from tools import Tools
 import constants
@@ -44,7 +42,7 @@ class Evaluation:
         print("Now looking for the least busy backend...")
         least_busy_backend = Tools.find_least_busy_backend_from_open(test_range)
 
-        print("Now waiting for the Quantum Batch Job to finish...\n This will for sure take a while...")
+        print("Now waiting for the Quantum Batch Job to finish...\nThis will take a while...")
         quantum_results = Tools.run_batch_job(circuits, least_busy_backend)
         flag = False
         while not flag:
@@ -53,27 +51,33 @@ class Evaluation:
                 if status != JobStatus.DONE:
                     flag = False
         print("Quantum experiments finished.")
-
+        print("Preparing plots...")
         count_jobs = 1
         for job in quantum_results.managed_jobs():
             quantum_execution_times.append(job.result().time_taken)
             counts_dict = job.result().get_counts()
-            correct_counts = counts_dict.get('1'*count_jobs,0)
+            correct_counts = counts_dict.get('1' * count_jobs, 0)
             print(correct_counts)
-            success_percentage = (correct_counts/1024)*100
+            success_percentage = (correct_counts / 1024) * 100
             success_rates.append(success_percentage)
             count_jobs = count_jobs + 1
 
+        import numpy as np
         import matplotlib.pyplot as plt
-        fig, (times, accuracy) = plt.subplots(2)
-        fig.suptitle('Execution times and Quantum accuracy')
-        times.plot(n_bits, classical_execution_times, 'c')
-        times.plot(n_bits, quantum_execution_times, 'r')
-        times.set(xlabel="Bits/Qubits",ylabel="Execution time (in seconds)")
-        accuracy.plot(n_bits, success_rates)
-        times.set(xlabel="Bits/Qubits",ylabel="Accuracy Percentage")
-        fig.show()
-
+        X = np.arange(start=1, stop=len(n_bits)+1, step=1)
+        plt.figure()
+        plt.subplot(211)
+        plt.title("Execution Times")
+        plt.bar(X + 0.00, classical_execution_times, color='b', width=0.25)
+        plt.bar(X + 0.25, quantum_execution_times, color='g', width=0.25)
+        plt.ylabel("In seconds")
+        plt.legend(labels=['Classical', 'Quantum'])
+        plt.subplot(212)
+        plt.title("Quantum Accuracy")
+        plt.bar(n_bits, success_rates, color='g')
+        plt.ylabel("Percentage")
+        plt.legend(labels=['Accuracy Percentage'])
+        plt.show()
         return
 
     @classmethod
@@ -87,13 +91,15 @@ class Evaluation:
         circuits = []
         quantum_execution_times = []
         classical_execution_times = []
-
+        success_rates = []
+        random_binaries = []
         print("Evaluating Bernstein - Vazirani... This might take a while...")
 
         for number_of_bits in range(1, test_range + 1):
             n_bits.append(number_of_bits)
             classical_result = Tools.bernstein_vazirani_classical(number_of_bits)
             random_binary = RandomBinary.generate_random_binary_v2(number_of_bits)
+            random_binaries.append(random_binary)
             circuits.append(Tools.prepare_bv(random_binary))
             classical_execution_times.append(classical_result[1])
             completion_percentage = int((number_of_bits / test_range) * 100)
@@ -102,15 +108,40 @@ class Evaluation:
         print("Now looking for the least busy backend...")
         least_busy_backend = Tools.find_least_busy_backend_from_open(test_range)
 
-        print("Now waiting for the Quantum Batch Job to finish...")
-        quantum_results = Tools.run_batch_job(circuits, least_busy_backend).results()
+        print("Now waiting for the Quantum Batch Job to finish...\nThis will take a while...")
+        quantum_results = Tools.run_batch_job(circuits, least_busy_backend)
+        flag = False
+        while not flag:
+            for status in quantum_results.statuses():
+                flag = True
+                if status != JobStatus.DONE:
+                    flag = False
+        print("Quantum experiments finished.")
+        print("Preparing plots...")
+        count = 0
+        for job in quantum_results.managed_jobs():
+            quantum_execution_times.append(job.result().time_taken)
+            counts_dict = job.result().get_counts()
+            correct_counts = counts_dict.get(random_binaries[count], 0)
+            print(correct_counts)
+            success_percentage = (correct_counts / 1024) * 100
+            success_rates.append(success_percentage)
+            count = count + 1
 
-        for number_of_bits in range(0, test_range):
-            print(quantum_results.get_counts(number_of_bits))
-
+        import numpy as np
         import matplotlib.pyplot as plt
-        plt.plot(n_bits, classical_execution_times, 'c')
-        plt.plot(n_bits, quantum_execution_times, 'r')
-        plt.ylabel('Time taken in seconds')
+        X = np.arange(start=1, stop=len(n_bits) + 1, step=1)
+        plt.figure()
+        plt.subplot(211)
+        plt.title("Execution Times")
+        plt.bar(X + 0.00, classical_execution_times, color='b', width=0.25)
+        plt.bar(X + 0.25, quantum_execution_times, color='g', width=0.25)
+        plt.ylabel("In seconds")
+        plt.legend(labels=['Classical', 'Quantum'])
+        plt.subplot(212)
+        plt.title("Quantum Accuracy")
+        plt.bar(n_bits, success_rates, color='g')
+        plt.ylabel("Percentage")
+        plt.legend(labels=['Accuracy Percentage'])
         plt.show()
         return

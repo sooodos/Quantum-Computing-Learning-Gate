@@ -8,7 +8,7 @@ class BernsteinVazirani:
     def bernstein_vazirani(cls, random_binary, eval_mode: bool) -> QuantumCircuit:
         # Construct secret number oracle
 
-        secret_number_oracle = SecretNUmberOracle.create_secret_number_oracle(random_binary=random_binary)
+        secret_number_oracle = SecretNUmberOracle.create_secret_number_oracle(random_binary=random_binary, eval_mode=eval_mode)
         num_of_qubits = secret_number_oracle.num_qubits
 
         # Construct circuit according to the length of the number

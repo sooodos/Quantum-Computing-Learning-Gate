@@ -225,6 +225,7 @@ class Tools:
         # Use Job Manager to break the circuits into multiple jobs.
         job_manager = IBMQJobManager()
         job_set_eval = job_manager.run(transpiled_circuits, backend=least_busy_backend, name='eval',
-                                       max_experiments_per_job=1) # max_experiments_per_job =1 very important to get individual execution times
+                                       max_experiments_per_job=1) # max_experiments_per_job =1 very important to get
+        # individual execution times
         return job_set_eval
 

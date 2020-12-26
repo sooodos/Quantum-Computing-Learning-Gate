@@ -5,6 +5,27 @@ from qiskit.providers import JobStatus
 
 
 class Evaluation:
+
+    @classmethod
+    def plot_results(cls, inputs: list, quantum: list, classical: list, accuracy: list):
+        import numpy as np
+        import matplotlib.pyplot as plt
+        X = np.arange(start=1, stop=len(inputs) + 1, step=1)
+        plt.figure()
+        plt.subplot(211)
+        plt.title("Execution Times")
+        plt.bar(X + 0.00, classical, color='b', width=0.25)
+        plt.bar(X + 0.25, quantum, color='g', width=0.25)
+        plt.ylabel("In seconds")
+        plt.legend(labels=['Classical', 'Quantum'])
+        plt.subplot(212)
+        plt.title("Quantum Accuracy")
+        plt.bar(inputs, accuracy, color='g')
+        plt.ylabel("Percentage")
+        plt.legend(labels=['Accuracy Percentage'])
+        plt.show()
+        return
+
     @classmethod
     def evaluate(cls, algorithm):
 
@@ -51,6 +72,7 @@ class Evaluation:
                 if status != JobStatus.DONE:
                     flag = False
         print("Quantum experiments finished.")
+
         print("Preparing plots...")
         count_jobs = 1
         for job in quantum_results.managed_jobs():
@@ -62,22 +84,7 @@ class Evaluation:
             success_rates.append(success_percentage)
             count_jobs = count_jobs + 1
 
-        import numpy as np
-        import matplotlib.pyplot as plt
-        X = np.arange(start=1, stop=len(n_bits)+1, step=1)
-        plt.figure()
-        plt.subplot(211)
-        plt.title("Execution Times")
-        plt.bar(X + 0.00, classical_execution_times, color='b', width=0.25)
-        plt.bar(X + 0.25, quantum_execution_times, color='g', width=0.25)
-        plt.ylabel("In seconds")
-        plt.legend(labels=['Classical', 'Quantum'])
-        plt.subplot(212)
-        plt.title("Quantum Accuracy")
-        plt.bar(n_bits, success_rates, color='g')
-        plt.ylabel("Percentage")
-        plt.legend(labels=['Accuracy Percentage'])
-        plt.show()
+        cls.plot_results(n_bits, quantum_execution_times, classical_execution_times, success_rates)
         return
 
     @classmethod
@@ -117,6 +124,7 @@ class Evaluation:
                 if status != JobStatus.DONE:
                     flag = False
         print("Quantum experiments finished.")
+
         print("Preparing plots...")
         count = 0
         for job in quantum_results.managed_jobs():
@@ -128,20 +136,5 @@ class Evaluation:
             success_rates.append(success_percentage)
             count = count + 1
 
-        import numpy as np
-        import matplotlib.pyplot as plt
-        X = np.arange(start=1, stop=len(n_bits) + 1, step=1)
-        plt.figure()
-        plt.subplot(211)
-        plt.title("Execution Times")
-        plt.bar(X + 0.00, classical_execution_times, color='b', width=0.25)
-        plt.bar(X + 0.25, quantum_execution_times, color='g', width=0.25)
-        plt.ylabel("In seconds")
-        plt.legend(labels=['Classical', 'Quantum'])
-        plt.subplot(212)
-        plt.title("Quantum Accuracy")
-        plt.bar(n_bits, success_rates, color='g')
-        plt.ylabel("Percentage")
-        plt.legend(labels=['Accuracy Percentage'])
-        plt.show()
+        cls.plot_results(n_bits, quantum_execution_times, classical_execution_times, success_rates)
         return

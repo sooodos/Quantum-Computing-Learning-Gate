@@ -33,5 +33,5 @@ experimentation_level = "Enter:" \
                         "\n\n1 For Level 1 experimentation. (Simple experiments)" \
                         "\n\n2 For Level 2 experimentation. (The Exciting Game)" \
                         "\n\n3 For Level 3 experimentation. (Algorithm Experimentation)" \
-                        "\n\n3 For Level 4 experimentation. (Algorithm Evaluation)" \
+                        "\n\n4 For Level 4 experimentation. (Algorithm Evaluation)" \
                         "\n\nYour input:"

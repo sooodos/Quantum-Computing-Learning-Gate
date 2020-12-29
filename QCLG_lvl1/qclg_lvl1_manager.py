@@ -1,8 +1,8 @@
 import constants
-from simple_experiments.hello_quantum_world import HelloWorld
-from simple_experiments.interference import Interference
-from simple_experiments.single_qubit_superposition import SingleQubitSuperposition
-from simple_experiments.three_qubits_superposition import ThreeQubitSuperposition
+from QCLG_lvl1.hello_quantum_world import HelloWorld
+from QCLG_lvl1.interference import Interference
+from QCLG_lvl1.single_qubit_superposition import SingleQubitSuperposition
+from QCLG_lvl1.three_qubits_superposition import ThreeQubitSuperposition
 
 
 class SimpleExperimentsManager:

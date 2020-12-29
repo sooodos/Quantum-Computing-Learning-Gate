@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from classical.BitCombinations import BitCombinations
+from QCLG_lvl3.classical.BitCombinations import BitCombinations
 
 
 class ClassicalXor:

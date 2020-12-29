@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import overload
 import matplotlib.pyplot as plt
 from qiskit import QuantumCircuit, BasicAer, execute, IBMQ, transpile
 from qiskit.providers import BaseJob
@@ -8,12 +7,11 @@ from qiskit.providers.ibmq.managed import ManagedJobSet
 from qiskit.visualization import plot_histogram
 
 import constants
-from quantum_algorithms.bernstein_vazirani import BernsteinVazirani
-from quantum_algorithms.deutsch_josza import DeutschJosza
-
-from classical.classical_xor import ClassicalXor
-from classical.bernstein_vazirani_classical import BersteinVaziraniClassical
-from classical.random_binary import RandomBinary
+from QCLG_lvl3.classical.bernstein_vazirani_classical import BersteinVaziraniClassical
+from QCLG_lvl3.classical.classical_xor import ClassicalXor
+from QCLG_lvl3.classical.random_binary import RandomBinary
+from QCLG_lvl3.quantum_algorithms.bernstein_vazirani import BernsteinVazirani
+from QCLG_lvl3.quantum_algorithms.deutsch_josza import DeutschJosza
 from credentials import account_details
 
 

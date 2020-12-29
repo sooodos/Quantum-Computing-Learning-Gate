@@ -1,5 +1,6 @@
 from qiskit import QuantumCircuit
-from oracles.secret_number_oracle import SecretNUmberOracle
+
+from QCLG_lvl3.oracles.secret_number_oracle import SecretNUmberOracle
 
 
 class BernsteinVazirani:

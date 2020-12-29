@@ -1,4 +1,4 @@
-from classical.random_binary import RandomBinary
+from QCLG_lvl3.classical.random_binary import RandomBinary
 from tools import Tools
 import constants
 from qiskit.providers import JobStatus

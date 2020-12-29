@@ -1,6 +1,6 @@
 from qiskit import QuantumCircuit
 
-from oracles.cnot_oracle import CnotOracle
+from QCLG_lvl3.oracles.cnot_oracle import CnotOracle
 
 
 class DeutschJosza:
